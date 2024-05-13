@@ -2,3 +2,5 @@ mysql-connector-python
 reportlab
 plotly
 matplotlib
+streamlit-option-menu
+streamlit-authenticator==0.2.3
