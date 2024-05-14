@@ -9,6 +9,8 @@ from datetime import date
 from reportlab.lib.utils import ImageReader
 import streamlit as st
 import base64
+import os
+
 width, height = LETTER
 # Define colors
 color_primary = Color(0, 0.247, 0.455)  # Primary color (Ohka Blue)
@@ -35,8 +37,8 @@ def draw_canvas(c, df_transposed, customer_id):
     c.setFont('Times-Roman', 10)
 
     # Add images
-    c.drawImage("C:\\Users\\saksh\\OneDrive\\python-ui\\Layout_working\\Layout\\Store_image.png", width - inch*8-5, height-50, width=100, height=30, preserveAspectRatio=True)
-    c.drawImage("C:\\Users\\saksh\\OneDrive\\python-ui\\Layout_working\\Layout\\Store_image.png", width - inch * 2, height-50, width=100, height=30, preserveAspectRatio=True, mask='auto')
+    c.drawImage("Store_image.png", width - inch*8-5, height-50, width=100, height=30, preserveAspectRatio=True)
+    c.drawImage("Store_image.png", width - inch * 2, height-50, width=100, height=30, preserveAspectRatio=True, mask='auto')
 
     # Draw lines
     c.line(40, 740, LETTER[0] - 50, 740)
@@ -189,7 +191,12 @@ def generate_pdf(df_transposed, filename, customer_id):
     c = canvas.Canvas(my_path, pagesize=LETTER)
     c.setStrokeColor(color_accent)
     c.rect(0, 0, width, height, stroke=1, fill=0)
-    watermark_path = "C:\\Users\\saksh\\OneDrive\\python-ui\\Layout_working\\Layout\\boutique_flower2.png"
+    # Get the current directory
+    current_dir = os.getcwd()
+    
+    # Concatenate the current directory with the watermark filename
+    watermark_path = os.path.join(current_dir, "boutique_flower2.png")
+    
     add_watermark(c, watermark_path, opacity=0.3)
     draw_canvas(c, df_transposed, customer_id)
     c.showPage()
